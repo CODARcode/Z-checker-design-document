@@ -1,0 +1,17 @@
+@inproceedings{sz,
+  author    = {Sheng Di and
+               Franck Cappello},
+  title     = {Fast Error-Bounded Lossy {HPC} Data Compression with {SZ}},
+  booktitle = {{IPDPS} 2016},
+  pages     = {730--739},
+  year      = {2016}
+}
+
+@inproceedings{baker,
+  title={A methodology for evaluating the impact of data compression on climate simulation data},
+  author={Baker, Allison H and Xu, Haiying and Dennis, John M and Levy, Michael N and Nychka, Doug and Mickelson, Sheri A and Edwards, Jim and Vertenstein, Mariana and Wegener, Al},
+  booktitle={Proceedings of the 23rd international symposium on High-performance parallel and distributed computing},
+  pages={203--214},
+  year={2014},
+  organization={ACM}
+}

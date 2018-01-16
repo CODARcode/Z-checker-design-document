@@ -1,0 +1,44 @@
+\documentclass[11pt]{article}
+
+\newcommand{\TITLE}{Z-checker: a compression assessment tool}
+\newcommand{\AUTHORS}{Franck Cappello, Sheng Di}
+
+\input{preamble}
+
+\title{\TITLE{}}
+\date{}
+\author{\AUTHORS{}}
+
+\begin{document}
+\pagestyle{empty}
+
+\input{header}
+
+\newpage
+
+\renewcommand{\contentsname}{{\huge Table of contents}}
+
+\tableofcontents
+
+\clearpage
+\maketitle
+
+\pagestyle{plain}
+\setcounter{page}{1}
+
+\input{Narrative/introduction}
+\input{Narrative/stakeholders}
+\input{Narrative/usecases}
+\input{Narrative/requirements}
+\input{Narrative/related}
+\input{Narrative/design}
+\input{Narrative/metrics}
+\input{Narrative/workplan}
+\input{Narrative/questions}
+
+\clearpage
+\bibliographystyle{ieeetr}
+\bibliography{Bibs/z-checker.bib}
+
+\end{document}
+
