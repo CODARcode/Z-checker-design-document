@@ -1,6 +1,6 @@
 \section{Use cases}
 
-Use cases capture the user stories that motivate the work. As mentioned previously, Z-checker provides two execution modes based on users' diverse demands of compression assessment. it is a flexible framework being able to be added by more compressors or analysis function libraries. We first introduce the use cases related to execution modes, and then describe the use case of integrating lossy compressors into Z-checker, and finally summarized the ECP applications we already assessed using Z-checker. 
+Use cases capture the user stories that motivate the work. As mentioned previously, Z-checker provides two execution modes based on users' diverse demands of compression assessment. it is a flexible framework being able to be added by more compressors or analysis function libraries. We first introduce the use cases related to execution modes, and then describe the use case of integrating lossy compressors into Z-checker, and finally summarized the ECP applications we already assessed using Z-checker.
 
 \subsection{Offline analysis}
 
@@ -8,18 +8,18 @@ Z-checker provides a series of executables for science users to perform the asse
 \begin{itemize}
   \item The command, analyzeDataProperty, can output the property information of the target data, such as value range, auto correlation, entropy values, and frequency information.
   \item The command compareDataSets will receive two input files (original raw file and decompressed file) and output the data distortion information between them (such as maximum error, distribution of errors, auto correlation of errors, and peak signal-to-noise ratio).
-  \item The command runOfflineCase is an integration of analyzeDataProperty and compareDataSets. It allows users to specify a set of data files and decompressed data files to the offline analysis in a batch way. It provides multiple options allowing users to do the analysis with different levels/granularities. 
-  \item generateGNUPlot allows to generate the evaluation figures (in .eps format) based on the analysis. 
-  \item generateReport allows to generate the assessment report (in .pdf format) based on the analysis. 
+  \item The command runOfflineCase is an integration of analyzeDataProperty and compareDataSets. It allows users to specify a set of data files and decompressed data files to the offline analysis in a batch way. It provides multiple options allowing users to do the analysis with different levels/granularities.
+  \item generateGNUPlot allows to generate the evaluation figures (in .eps format) based on the analysis.
+  \item generateReport allows to generate the assessment report (in .pdf format) based on the analysis.
 \end{itemize}
- 
+
 \subsection{Online analysis}
 
 SZ provides a set of easy-to-use APIs for other developers (such as ADIOS developers) to integrate Z-checker's assessment functions simply. Online analysis is a typical use case allowing users to integrate Z-checker's API functions into their codes and run their applications/tools with Z-checker in parallel.
 
-In order to activate the MPI version of Z-checker, the user needs to install an mpi library such as MPICH and adopt ``--enable-mpi'' option during the installation of Z-checker. We provide two examples to do the parallel data analysis and parallel compression assessment respectively. The user needs to switch executionMode from OFFLINE to ONLINE in the configuration file (i.e., zc.config); or set the global variable ``executionMode'' to be ZC\_ONLINE during the initialization (SZ\_Init()). 
+In order to activate the MPI version of Z-checker, the user needs to install an mpi library such as MPICH and adopt ``--enable-mpi'' option during the installation of Z-checker. We provide two examples to do the parallel data analysis and parallel compression assessment respectively. The user needs to switch executionMode from OFFLINE to ONLINE in the configuration file (i.e., zc.config); or set the global variable ``executionMode'' to be ZC\_ONLINE during the initialization (SZ\_Init()).
 
-The user just needs to specifies the starting point and ending point of the compression and decompression respectively, by using Z-checker's interface, in order to get the online assessment results. The related interfaces are listed below: 
+The user just needs to specifies the starting point and ending point of the compression and decompression respectively, by using Z-checker's interface, in order to get the online assessment results. The related interfaces are listed below:
 \begin{itemize}
   \item ZC\_DataProperty* dataProperty = ZC\_startCmpr(propName, ZC\_DOUBLE, g, 0, 0, 0, nbLines, M); //start compression
   \item ZC\_CompareData* compareResult = ZC\_endCmpr(dataProperty, cmprSize); //end compression
@@ -34,12 +34,12 @@ for (i = 0; I < ITER_TIMES; i++) {
     if(i%50==0) //control the compression frequency over time steps
     {
         //make a name for the current target data property
-    	sprintf(propName, "%s_%04d", varName, i); 
+    	sprintf(propName, "%s_%04d", varName, i);
     	ZC_DataProperty* dataProperty = ZC_startCmpr(propName, ZC_DOUBLE, \
                     g, 0, 0, 0, nbLines, M); //start compression
     	cmprBytes = SZ_compress(SZ_DOUBLE, g, &cmprSize, 0, 0, 0, nbLines, M);
         //end compression
-    	ZC_CompareData* compareResult = ZC_endCmpr(dataProperty, cmprSize); 
+    	ZC_CompareData* compareResult = ZC_endCmpr(dataProperty, cmprSize);
     	sprintf(cmprCaseName, "%s_%s_%04d(1E-3)", varName, compressorName, i);
     	ZC_startDec(); //start decompression
     	decData = SZ_decompress(SZ_DOUBLE,cmprBytes,cmprSize,0,0,0,nbLines,M);	
@@ -49,9 +49,9 @@ for (i = 0; I < ITER_TIMES; i++) {
     		ZC_writeDataProperty(dataProperty, "dataProperties");
     	
         //free data property generated at current time step		
-    	freeDataProperty(dataProperty); 
+    	freeDataProperty(dataProperty);
         //free compression assessment results at current time step
-    	freeCompareResult(compareResult); 
+    	freeCompareResult(compareResult);
     	free(cmprBytes);
     	free(decData);
     }
@@ -66,11 +66,7 @@ for (i = 0; I < ITER_TIMES; i++) {
 
 \end{lstlisting}
 
-<<<<<<< HEAD
 \subsection{The ECP applications that have been assessed by Z-checker}
-=======
-\subsection{The ECP applications that have been assessed Z-checker}
->>>>>>> a5e4ca235dbe13fc4b2dbf86e23db0e7f966fa45
 
 \begin{itemize}
   \item Exasky (HACC cosmology simulation and NYX cosmology simulation)
