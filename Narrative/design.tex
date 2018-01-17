@@ -65,7 +65,11 @@ Some functionalities of Z-checker depends on third-party libraries, which are li
 \item Support MPI library: ./configure --prefix=[install\_dir] --enable-mpi . (The user needs to install mpi library such as mpich before hand.)
 \item Support NetCDF : usage can be found in the subdirectory NetCDFReader/ (./configure --prefix=[install\_dir] --enable-netcdf --with-netcdf-prefix=DIR; NetCDF needs to be installed in advance.)
 \item Support HDF5 library: details can be found in HDF5Reader/ (./configure --prefix=[install\_dir] --enable-hdf5; the user needs to install HDF5 and set its environment variables according to HDF5 guide before hand.)
+<<<<<<< HEAD
+\item Support FFTW3 library: computation of 3D auto correlation requires FFTW3. In particular, 3D auto correlation is computed by using some functions provided by FFTW3. (./configure --prefix=[indall\_dir] --enable-fftw3 --with-fftw3-prefix=DIR; the user ndeeds to install FFTW3 before hand.)
+=======
 \item Support Support FFTW3 library: computation of 3D auto correlation requires FFTW3. In particular, 3D auto correlation is computed by using some functions provided by FFTW3. (./configure --prefix=[indall\_dir] --enable-fftw3 --with-fftw3-prefix=DIR; the user ndeeds to install FFTW3 before hand.)
+>>>>>>> a5e4ca235dbe13fc4b2dbf86e23db0e7f966fa45
 \item Support R language/library: the functions coded in R script can be executed in the data analysis and compression analysis. In particular, SSIM function is coded in R, so it requires R library in Z-checker. (./configure --prefix=[index\_dir] --enable-r --with-r-prefix=DIR)
 \end{enumerate}
 
@@ -73,10 +77,79 @@ In addition, the user can also use --with-xxx-include-path and --with-xxx-lib-pa
 
 \subsection{Z-checker command line format and basic usage}
 
+<<<<<<< HEAD
+\textbf{Command}: runOfflineCase\\
+Description: This is a command to execute the offline analysis based on given data files and compressed/decompressed data files.
+\begin{lstlisting}[style=ShellStyleInline, basicstyle = \footnotesize\ttfamily]
+Usage: runOfflineCase <options>
+Options:
+* input information:
+    -N <compressor name>: the name of the compressor
+    -C <information file> : the file containing the data information
+* analysis options:
+    -A : perform the full analysis of the compression results
+    -a <metric> : perform quick analysis for specific metric
+        *metric options: (including all variables)
+          cr  : compression ratio (min, avg, max)
+          err : compression error (min, avg, max)
+          full: complete information listed as above
+* metadata options:
+    -n : print number of variables
+    -m : print the names of variables
+    -l : list complete information of all variables
+    -p : print all the precisions used in the analysis
+* Examples:
+    runOfflineCase -C varCmpr.inf -l
+    runOfflineCase -C varCmpr.inf -m
+    runOfflineCase -C varCmpr.inf -A
+    runOfflineCase -C varCmpr.inf -a err
+    runOfflineCase -C varCmpr.inf -a cr
+\end{lstlisting}
+
+\textbf{Command}: zccallr\\
+Description: This is an executable for usrs to simply test the execution of R script files. zccallr.c is a good example to show how to call R script from C.
+\begin{lstlisting}[style=ShellStyleInline, basicstyle = \footnotesize\ttfamily]
+Usage: zccallr <options>
+Options:
+* Rscript file:
+	-s <script_file>: specify the path of the R_script_file
+	-c <function_name>: specify the function
+* data type:
+	-i : integer data (int type)
+	-f : single precision (float type)
+	-d : double precision (double type)
+* input data files:
+	-e <endian_type>: endian type of the binary data in input files: 
+				0(little-endian); 1(big-endian)
+	-A <first data file> : first data file such as original data file
+	-B <second data file> : second data file such as decompressed data file
+	-C <third data file> : third data file for analysis
+	-D <fourth data file> : fourth data file for analysis
+	-E <fifth data file> : fifth data file for analysis
+	-F <sixth data file> : sixth data file for analysis
+* output type of result file: 
+	-r : print the result on the screen.
+	-b : analysis result stored in binary format
+	-t : analysis result stored in text format
+	-o <output file path> : the path of the output file.
+* dimensions: 
+	-1 <nx> : dimension for 1D data such as data[nx]
+	-2 <nx> <ny> : dimensions for 2D data such as data[ny][nx]
+	-3 <nx> <ny> <nz> : dimensions for 3D data such as data[nz][ny][nx] 
+* examples: 
+	zccallr -s func.R -c add1 -r -f -e 0 \
+		-A ../../examples/testdata/x86/testfloat_8_8_128.dat \
+				-3 8 8 128
+	zccallr -s func.R -c computeErr -r -f -e 0 \
+		-A ../../examples/testdata/x86/testfloat_8_8_128.dat \
+		-B ../../examples/testdata/x86/testfloat_8_8_128.dat.sz.out \
+		-3 8 8 128
+=======
 Command: runOfflineCase
 
 \begin{lstlisting}[style=ShellStyleInline, basicstyle = \footnotesize\ttfamily]
 
+>>>>>>> a5e4ca235dbe13fc4b2dbf86e23db0e7f966fa45
 \end{lstlisting}
 
 \subsection{Z-checker configuration files}
