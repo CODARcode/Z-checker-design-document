@@ -1,25 +1,28 @@
 \section{Use cases}
 
-Use cases capture the user stories that motivate the work. As mentioned previously, Z-checker provides two execution modes based on users' diverse demands of compression assessment. it is a flexible framework being able to be added by more compressors or analysis function libraries. We first introduce the use cases related to execution modes, and then describe the use case of integrating lossy compressors into Z-checker, and finally summarized the ECP applications we already assessed using Z-checker.
+Use cases capture the user stories that motivate the work. As mentioned previously, Z-checker is a flexible 
+framework that provides two execution modes based on users' diverse demands for compression assessment and
+can be extended by adding compressors and analysis function libraries. 
+We first introduce the use cases related to execution modes, then describe the use case of integrating lossy compressors into Z-checker, and finally summarize the ECP applications already assessed using Z-checker.
 
 \subsection{Offline analysis}
 
-Z-checker provides a series of executables for science users to perform the assessment based on the existing data files that were already produced by simulations. Specifically, Given original raw data files, compressed data files and decompressed data files, the users can perform the analysis by different commands, such as \emph{analyzeDataProperty}, \emph{compareDataSets}, \emph{runOfflineCase}, \emph{generateGNUPlot}, and \emph{generateReport}.
+Z-checker provides a series of executables for science users to perform the assessment based on the existing data files that were already produced by simulations. Specifically, given original raw data files, compressed data files, and decompressed data files, the user can perform the analysis by different commands, such as \emph{analyzeDataProperty}, \emph{compareDataSets}, \emph{runOfflineCase}, \emph{generateGNUPlot}, and \emph{generateReport}.
 \begin{itemize}
-  \item The command, analyzeDataProperty, can output the property information of the target data, such as value range, auto correlation, entropy values, and frequency information.
-  \item The command compareDataSets will receive two input files (original raw file and decompressed file) and output the data distortion information between them (such as maximum error, distribution of errors, auto correlation of errors, and peak signal-to-noise ratio).
-  \item The command runOfflineCase is an integration of analyzeDataProperty and compareDataSets. It allows users to specify a set of data files and decompressed data files to the offline analysis in a batch way. It provides multiple options allowing users to do the analysis with different levels/granularities.
-  \item generateGNUPlot allows to generate the evaluation figures (in .eps format) based on the analysis.
-  \item generateReport allows to generate the assessment report (in .pdf format) based on the analysis.
+  \item \emph{analyzeDataProperty} outputs the property information of the target data, such as value range, auto correlation, entropy values, and frequency information.
+  \item \emph{compareDataSets} receives two input files (original raw file and decompressed file) and outputs the data distortion information between them (such as maximum error, distribution of errors, auto correlation of errors, and peak signal-to-noise ratio).
+  \item \emph{runOfflineCase} integrates \emph{analyzeDataProperty} and \emph{compareDataSets}. It allows users to specify a set of data files and decompressed data files to the offline analysis in a batch way and provides multiple options allowing users to do the analysis with different levels/granularities.
+  \item \emph{generateGNUPlot} allows to generate the evaluation figures (in .eps format) based on the analysis.
+  \item \emph{generateReport} allows to generate the assessment report (in .pdf format) based on the analysis.
 \end{itemize}
 
 \subsection{Online analysis}
 
-SZ provides a set of easy-to-use APIs for other developers (such as ADIOS developers) to integrate Z-checker's assessment functions simply. Online analysis is a typical use case allowing users to integrate Z-checker's API functions into their codes and run their applications/tools with Z-checker in parallel.
+The SZ compressor provides a set of easy-to-use APIs for other developers (such as ADIOS developers) to integrate Z-checker's assessment functions. Online analysis is a typical use case allowing users to integrate Z-checker's API functions into their codes and run their applications/tools with Z-checker in parallel.
 
-In order to activate the MPI version of Z-checker, the user needs to install an mpi library such as MPICH and adopt ``--enable-mpi'' option during the installation of Z-checker. We provide two examples to do the parallel data analysis and parallel compression assessment respectively. The user needs to switch executionMode from OFFLINE to ONLINE in the configuration file (i.e., zc.config); or set the global variable ``executionMode'' to be ZC\_ONLINE during the initialization (SZ\_Init()).
+To activate the MPI version of Z-checker, the user needs to install an mpi library such as MPICH and adopt the ``--enable-mpi'' option during the installation of Z-checker. We provide examples for parallel data analysis and for parallel compression assessment. The user then needs to switch executionMode from OFFLINE to ONLINE in the configuration file (i.e., zc.config) or set the global variable ``executionMode'' to be ZC\_ONLINE during the initialization (SZ\_Init()).
 
-The user just needs to specifies the starting point and ending point of the compression and decompression respectively, by using Z-checker's interface, in order to get the online assessment results. The related interfaces are listed below:
+The user needs only to specify the starting point and ending point of the compression and decompression by using Z-checker's interface in order to obtain the online assessment results. The related interfaces are listed below:
 \begin{itemize}
   \item ZC\_DataProperty* dataProperty = ZC\_startCmpr(propName, ZC\_DOUBLE, g, 0, 0, 0, nbLines, M); //start compression
   \item ZC\_CompareData* compareResult = ZC\_endCmpr(dataProperty, cmprSize); //end compression
@@ -66,12 +69,12 @@ for (i = 0; I < ITER_TIMES; i++) {
 
 \end{lstlisting}
 
-\subsection{The ECP applications that have been assessed by Z-checker}
+\subsection{ECP applications assessed by Z-checker}
 
 \begin{itemize}
-  \item Exasky (HACC cosmology simulation and NYX cosmology simulation)
+  \item ExaSky (HACC cosmology simulation and NYX cosmology simulation)
   \item QMCPack (quantum chemistry simulation)
-  \item EXAALT (Molecular Dynamics simulation)
+  \item EXAALT (molecular dynamics simulation)
   \item EXAFEL (Linac Coherent Light Source)
   \item NWCHEM-X (NWCHEM data sets)
   \item GAMESS (two-integrals data sets)
