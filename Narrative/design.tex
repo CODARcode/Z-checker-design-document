@@ -320,7 +320,7 @@ dec_data=../runOfflineCase_testdata/CLDLOW_1_1800_3600_1E-6.dat.sz.out
 
 3. errBounds.cfg (specifying the error bounds used in the assessment)
 
-This configuration is used by only One-command assessment of Z-checker-installer. Before executing the key assessment command - runZCCase.sh, the users can modify the errBounds.cfg to specify the error bounds they want to use when doing the compression/decompression test in the assessment. The runZCCase.sh will perform the compression based on the error bounds set in the errBounds.cfg and plot the compression results correspondingly.
+This configuration is used only by the One-command assessment of Z-checker-installer. Before executing the key assessment command (runZCCase.sh), the users can modify the errBounds.cfg to specify the error bounds they want to use when doing the compression/decompression test in the assessment. The runZCCase.sh will perform the compression based on the error bounds set in the errBounds.cfg and plot the compression results correspondingly.
 For example, the following two lines indicate that SZ and ZFP will be used to compress the target data with four error bounds (1E-1, 1E-2, 1E-3, and 1E-4) during the assessment. 
  
 SZ\_ERR\_BOUNDS = ``1E-1 1E-2 1E-3 1E-4"
