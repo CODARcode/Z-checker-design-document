@@ -3,7 +3,7 @@
 We introduce the design framework and some implementation details.
 
 \subsection{Overview}
-In this paper, we present Z-checker, a novel framework with three important features. (1) Z-checker can be used to explore the properties of original data sets for the purpose of data analytics or improvement of lossy compression algorithms. (2) Z-checker is integrated with a rich set of evaluation algorithms and assessment functions for selecting best-fit lossy compressors for specific data sets. (3) Z-checker features both static data visualization scripts and an interactive visualization system, which can generate visual results on demand. This interactive mode allows compression algorithm developers and users to compute dynamically analysis on user-selected portions of the data set.
+Z-checker is a novel framework with three important features: (1) it can be used to explore the properties of original data sets for the purpose of data analytics or improvement of lossy compression algorithms; (2) it is integrated with a rich set of evaluation algorithms and assessment functions for selecting best-fit lossy compressors for specific data sets; and (3) it features both static data visualization scripts and an interactive visualization system, which can generate visual results on demand. This interactive mode allows compression algorithm developers and users to dynamically compute analyses on user-selected portions of the data set.
 
 Z-checker is designed to support two processing modes, on-line and off-line, and two display modes, static and interactive. The four modes correspond to four different use cases. The off-line static mode is useful for generating a report on the original data set properties and the compression error, presenting multiple analysis views. The off-line interactive mode is useful for exploring the properties of the original data sets and the compression error. It allows users to dig into some region of interest and reveal local properties that are not present or visible on the whole data set. The on-line static display mode corresponds to in situ data compression and may generate and update the original data set compression analysis as long as the data is presented to Z-checker. The on-line interactive mode allows users to monitor the compression error while the data is produced. Users can zoom in on regions of interest and assess the quality of the data compression. Table \ref{tab:modes} summarizes the four use cases of Z-checker, considering the two processing modes and two visualization modes.
 
@@ -13,9 +13,9 @@ Z-checker is designed to support two processing modes, on-line and off-line, and
 \begin{tabular}{|l|p{0.315\columnwidth}|p{0.315\columnwidth}|}
 \hline \multicolumn{1}{|c|}{} & \multicolumn{1}{|c|}{Off-line Processing}&\multicolumn{1}{|c|}{On-line Processing}\\
 \hline
-Static Display & Load data once for all, and view results by generating local image files. & Load data based on dynamic requests, and view results by  local image files.\\
+Static Display & Load data once and view results by generating local image files. & Load data based on dynamic requests and view results by  local image files.\\
 \hline
-Interactive Display & Load data once for all, and view results on demand via a web page interactively. & Load data dynamically, and view results on demand by a web page interactively. \\
+Interactive Display & Load data once and view results on demand via a web page interactively. & Load data dynamically and view results on demand by a web page interactively. \\
 \hline
 \end{tabular}
 \label{tab:modes}
@@ -30,8 +30,8 @@ Interactive Display & Load data once for all, and view results on demand via a w
 The design architecture of Z-checker is presented in Figure \ref{fig:framework}, which involves three critical parts: \emph{user interface},  \emph{processing module}, and \emph{data module}.
 \begin{itemize}
 \item \emph{User interface} includes three key engines---input engine, output engine, and data visualization engine---as shown in the light-gray rectangles in Figure \ref{fig:framework}. They are in charge of reading the floating-point data stream (either original data or compressed bytes), dumping the analyzed data to disks/PFS, and plotting data figures for visualizing analysis results. The Data visualization engine also provides the interactive mode through a web browser interface (details are described later).
-\item \emph{Processing module}, in the whole framework, is the core module, which includes the analysis kernel and configuration parser. The former is responsible for performing the critical analysis, and the latter is in charge of parsing the user's analysis requirements (such as specifying input file path, specifying the compression command or executable, and customizing the analysis metrics on demand). Specifically, the analysis kernel is composed of two critical submodules, the data property analyzer and compression checker, which are responsible for exploring data properties based on the original data sets and analyzing the compression results with specified lossy compressors (discussed later in more detail).
-\item \emph{Data source module} (shown as the dark-gray box in the figure) is the bottom layer in the whole framework and represents the data source (such as data stream produced by scientific applications at runtime or the data files stored in the disks).
+\item \emph{Processing module} is the core module in the framework, which includes the analysis kernel and configuration parser. The former is responsible for performing the critical analysis, and the latter is in charge of parsing the user's analysis requirements (such as specifying the input file path, the compression command or executable, and the customization for the analysis metrics on demand). Specifically, the analysis kernel is composed of two critical submodules, the data property analyzer and compression checker, which are responsible for exploring data properties based on the original data sets and analyzing the compression results with specified lossy compressors (discussed later in more detail).
+\item \emph{Data source module}, the dark-gray box in the figure, is the bottom layer in the framework and represents the data source (such as the data stream produced by scientific applications at runtime or the data files stored in the disks).
 \end{itemize}
 
 \subsection{Terminology}
@@ -46,27 +46,27 @@ parameter, input, and output formats.
 
 \item[Application run:] A run of an application with a given set of parameters
 
-\item[Lossy compressors:] The library that provides lossy compression ability for scientific data sets. The science data includes different types, such as integer, single-precision and double-precision floating-point data. A lossy compressor should provide both executables and APIs for different users to call the lossy compression functions. A good lossy compressor should also provide multiple options for users to control compression errors, and it should respect the compression errors based on specified error-controlling.
+\item[Lossy compressor:] The library that provides the lossy compression capability for scientific data sets. The science data includes different types, such as integer, single-precision and double-precision floating-point data. A lossy compressor should provide both executables and APIs for different users to call the lossy compression functions. A good lossy compressor should also provide multiple options for users to control compression errors and it should respect the compression errors based on the specified error control.
 
-\item[Compression quality:] Compression quality includes compression ratio, bit-rate, compression time, decompression time, data distortion, rate-distortion, and so on. Compression ratio is defined as the ratio of the original raw data size to the the size of the compressed data. Bit-rate refers to the number of bits used to represent one data point after the compression. Hence, bit-rate is equal to the ratio of the number of bits used by one data point originally (e.g., 64 for double-precision floating-point data) to the compression ratio. compression time and decompression time are usually evaluated by compression rate and decompression rate respectively. Compression rate is the ratio of the original raw data size (in MB) to the compression time (in seconds). The decompression rate is the ratio of the original raw data size (in MB) to the decompression time (in seconds). Data distortion involves a set of distortion metrics such as maximum compression errors, peak signal-to-noise ratio (PSNR). Rate distortion is a common metric to evaluate the compression quality. Rate, here, means the bit-rate; distortion refers to PSNR.
+\item[Compression quality:] Compression quality includes compression ratio, bit-rate, compression time, decompression time, data distortion, rate-distortion, and so on. Compression ratio is defined as the ratio of the original raw data size to the the size of the compressed data. Bit-rate refers to the number of bits used to represent one data point after the compression. Hence, bit-rate is equal to the ratio of the number of bits used by one data point originally (e.g., 64 for double-precision floating-point data) to the compression ratio. Compression and decompression time are usually evaluated by compression rate and decompression rate respectively. Compression rate is the ratio of the original raw data size (in MB) to the compression time (in seconds). The decompression rate is the ratio of the original raw data size (in MB) to the decompression time (in seconds). Data distortion involves a set of distortion metrics such as maximum compression errors and peak signal-to-noise ratio (PSNR). Rate distortion is a common metric to evaluate the compression quality. Rate, here, means the bit-rate; distortion refers to PSNR.
 
 
-\item[Offline analysis:] Offline analysis means that given specific raw data files, compressed data files, and/or decompressed data files, Z-checker is able to perform the analysis and generate the report.
+\item[Offline analysis:] Offline analysis means that given specific raw data files, compressed data files, and/or decompressed data files, Z-checker is able to perform the analysis and generate a report.
 
-\item[Online analysis:] Online analysis means that Z-checker will be integrated into other tools or applications, performing the analysis with the running of applications, and generating the assessment report in the end.
+\item[Online analysis:] Online analysis means that Z-checker will be integrated into other tools or applications, performing the analysis while the application is running and generating the assessment report in the end.
 
 \end{description}
 
 \subsection{Dependencies}
 
-Some functionalities of Z-checker depends on third-party libraries, which are listed as follows:
+Some functionality in Z-checker depends on third-party libraries, which are listed as follows:
 
 \begin{enumerate}
-\item Support MPI library: ./configure --prefix=[install\_dir] --enable-mpi . (The user needs to install mpi library such as mpich before hand.)
+\item Support MPI library: ./configure --prefix=[install\_dir] --enable-mpi . (The user needs to install MPI library such as MPICH in advance.)
 \item Support NetCDF : usage can be found in the subdirectory NetCDFReader/ (./configure --prefix=[install\_dir] --enable-netcdf --with-netcdf-prefix=DIR; NetCDF needs to be installed in advance.)
-\item Support HDF5 library: details can be found in HDF5Reader/ (./configure --prefix=[install\_dir] --enable-hdf5; the user needs to install HDF5 and set its environment variables according to HDF5 guide before hand.)
-\item Support FFTW3 library: computation of 3D auto correlation requires FFTW3. In particular, 3D auto correlation is computed by using some functions provided by FFTW3. (./configure --prefix=[indall\_dir] --enable-fftw3 --with-fftw3-prefix=DIR; the user ndeeds to install FFTW3 before hand.)
-\item Support R language/library: the functions coded in R script can be executed in the data analysis and compression analysis. In particular, SSIM function is coded in R, so it requires R library in Z-checker. (./configure --prefix=[index\_dir] --enable-r --with-r-prefix=DIR)
+\item Support HDF5 library: details can be found in HDF5Reader/ (./configure --prefix=[install\_dir] --enable-hdf5; the user needs to install HDF5 and set its environment variables according to the HDF5 guide in advance.)
+\item Support FFTW3 library: computation of 3D auto correlation requires FFTW3. In particular, 3D auto correlation is computed by using some functions provided by FFTW3. (./configure --prefix=[indall\_dir] --enable-fftw3 --with-fftw3-prefix=DIR; the user ndeeds to install FFTW3 in advance.)
+\item Support R language/library: the functions coded in R scripts can be executed in the data analysis and compression analysis. In particular, the SSIM function is coded in R and requires the R library in Z-checker. (./configure --prefix=[index\_dir] --enable-r --with-r-prefix=DIR)
 \end{enumerate}
 
 In addition, the user can also use --with-xxx-include-path and --with-xxx-lib-path to specify the header directory and lib directory, respectively, instead of --with-xxx-prefix. More options can be found by executing "./configure -help".
@@ -102,7 +102,7 @@ Options:
 \end{lstlisting}
 
 \textbf{Command}: zccallr\\
-Description: This is an executable for usrs to simply test the execution of R script files. zccallr.c is a good example to show how to call R script from C.
+Description: This executable is for users to simply test the execution of R script files. zccallr.c is a good example to show how to call an R script from C.
 \begin{lstlisting}[style=ShellStyleInline, basicstyle = \footnotesize\ttfamily]
 Usage: zccallr <options>
 Options:
@@ -145,7 +145,7 @@ Options:
 
 1. zc.config (specifying the metrics to be used in the assessment)
 
-This configuration file is used by many commands in Z-checker, such as analyzeDataProperty, compareDataSets.
+This configuration file is used by many commands in Z-checker, such as analyzeDataProperty and compareDataSets.
 \begin{lstlisting}[style=ShellStyleInline, basicstyle =\footnotesize\ttfamily]
 #============================================================
 [ENV]
