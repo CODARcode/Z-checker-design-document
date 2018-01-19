@@ -320,7 +320,16 @@ dec_data=../runOfflineCase_testdata/CLDLOW_1_1800_3600_1E-6.dat.sz.out
 
 3. errBounds.cfg (specifying the error bounds used in the assessment)
 
-This configuration is used by only One-command assessment of Z-checker-installer.
+This configuration is used by only One-command assessment of Z-checker-installer. Before executing the key assessment command - runZCCase.sh, the users can modify the errBounds.cfg to specify the error bounds they want to use when doing the compression/decompression test in the assessment. The runZCCase.sh will perform the compression based on the error bounds set in the errBounds.cfg and plot the compression results correspondingly.
+For example, the following two lines indicate that SZ and ZFP will be used to compress the target data with four error bounds (1E-1, 1E-2, 1E-3, and 1E-4) during the assessment. 
+ 
+SZ\_ERR\_BOUNDS = ``1E-1 1E-2 1E-3 1E-4"
+
+ZFP\_ERR\_BOUNDS = ``1E-1 1E-2 1E-3 1E-4"
+
+The setting comparisonCases = ``sz\_f(1E-2),sz\_d(1E-2),zfp(1E-2) sz\_f(1E-4),sz\_d(1E-4),zfp(1E-4)"  indicates that under which compressors and what error bounds the user wants to do the comparison. 
+Specifically, with the above setting, the users can see the comparison results of compression ratio among the three compressors (sz\_f, sz\_d and zfp) with error bound = 1E-2 and 1E-4. 
+
 \begin{lstlisting}[style=ShellStyleInline, basicstyle =\footnotesize\ttfamily]
 #Compression error bounds for SZ
 SZ_ERR_BOUNDS="1E-1 1E-2 1E-3 1E-4"
@@ -329,7 +338,7 @@ SZ_ERR_BOUNDS="1E-1 1E-2 1E-3 1E-4"
 ZFP_ERR_BOUNDS="1E-1 1E-2 1E-3 1E-4"
 
 #Compression cases used to compare two compressors
-comparisonCases="sz_f(1E-2),sz_d(1E-2),zfp(1E-2) sz_f(1E-4),sz_d(1E-4),zfp(1E-4) sz_f(1E-6),sz_d(1E-6),zfp(1E-6)"
+comparisonCases="sz_f(1E-2),sz_d(1E-2),zfp(1E-2) sz_f(1E-4),sz_d(1E-4),zfp(1E-4)"
 
 #Number of evaluation results to be shown in the report
 numOfErrorBoundCases="2"
