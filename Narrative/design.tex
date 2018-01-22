@@ -374,14 +374,14 @@ compressionResults
 
 \subsection{One-command installation and usage}
 
-We provide a very easy-to-use way for users to install and use Z-checker, by leveraging Z-checker-installer. In Z-checker-installer, one user can perform only one command (i.e., z-checker-install.sh) to install every related depending package or libraries, such as SZ, ZFP, gnuplot, latex. After the simple installation, the user just needs to execute two commands to finish the complete assessment procedure for a given data set. (1) Executing \emph{createZCCase.sh} can generate an individual workspace based on the user's specified test case name. (2) Executing \emph{runZCCase.sh} will perform the compression automatically by different compressors such as SZ and ZFP, and finally generate the assessment report with narratives and figures insides.
-in the future, If the user wants to update his/her package based on the already installed z-checker-installer, he/she can execute one command z-checker-update.sh for simplicity, instead of rerunning z-checker-install.sh.
+We provide an easy method for users to install and use Z-checker by leveraging Z-checker-installer. In Z-checker-installer, one command (i.e., z-checker-install.sh) installs every related dependency, such as SZ, ZFP, gnuplot, and latex. After the simple installation, the user executes two commands to finish the complete assessment procedure for a given data set: (1) execute \emph{createZCCase.sh} to generate an individual workspace based on the user's specified test case name; and (2) execute \emph{runZCCase.sh} to perform the compression automatically by different compressors such as SZ and ZFP, and generate the assessment report with narratives and figures.
+In the future, if the user wants to update their package based on the already installed Z-checker-installer, they can execute z-checker-update.sh instead of rerunning z-checker-install.sh.
 
-Both Z-checker tool and Z-checker-installer package will be put in Spack later.
+Both Z-checker and Z-checker-installer will be added to Spack.
 
 \subsection{A typical test plan}
 
-This example describes how to generate data property analysis results and compression results, given original data files (in binary), compressed files and decompressed files.
+This example describes how to generate data property analysis results and compression results, given original data files (in binary), compressed files, and decompressed files.
 
 \begin{lstlisting}[style=ShellStyleInline, basicstyle =\footnotesize\ttfamily]
 
@@ -417,11 +417,11 @@ http://www.mcs.anl.gov/~shdi/download/runOfflineCase_testdata.tar.gz
 \end{lstlisting}
 
 \subsection{Release Goals}
-Release 0.2 for June 2018 will consist of the following functionalities.
+Release 0.2 for December 2018 will consist of the following functionalities.
 
 \begin{itemize}
   \item Support both online and offline analysis
-  \item Support reading of HDF5, NetCDF, Adios data
+  \item Support reading of HDF5, NetCDF, ADIOS types
   \item One-command installation and assessment
   \item Support integration of 3rd-party libraries
   \item Z-checker web visualization
