@@ -42,11 +42,11 @@ for (i = 0; I < ITER_TIMES; i++) {
                     g, 0, 0, 0, nbLines, M); //start compression
     	cmprBytes = SZ_compress(SZ_DOUBLE, g, &cmprSize, 0, 0, 0, nbLines, M);
         //end compression
-    	ZC_CompareData* compareResult = ZC_endCmpr(dataProperty, cmprSize);
+    	ZC_CompareData* compareResult = ZC_endCmpr(dataProperty, cmprCaseName, cmprSize);
     	sprintf(cmprCaseName, "%s_%s_%04d(1E-3)", varName, compressorName, i);
     	ZC_startDec(); //start decompression
     	decData = SZ_decompress(SZ_DOUBLE,cmprBytes,cmprSize,0,0,0,nbLines,M);	
-    	ZC_endDec(compareResult, cmprCaseName, decData); //end decompression			
+    	ZC_endDec(compareResult, decData); //end decompression			
 
     	if(rank==0)
     		ZC_writeDataProperty(dataProperty, "dataProperties");
